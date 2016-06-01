@@ -1,5 +1,4 @@
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
-import qualified CoRec.Example
+import qualified Vinyl.CoRec.Example
 
-main = CoRec.Example.main
-
+main = Vinyl.CoRec.Example.main

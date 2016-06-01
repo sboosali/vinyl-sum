@@ -52,12 +52,11 @@ library
                      ScopedTypeVariables StandaloneDeriving
 
  exposed-modules:
-  CoRec
-  CoRec.Types
+  Vinyl.CoRec
 
 -- other-modules:
-  CoRec.Extra
-  CoRec.Example
+  Vinyl.CoRec.Extra
+  Vinyl.CoRec.Example
 
  build-depends:
     base >=4.7 && <5
@@ -70,10 +69,11 @@ library
   -- , stm
   -- , template-haskell
 
+  , vinyl
   , deepseq
   , hashable
   , semigroups
-  -- ,
+  
   -- , lens
   -- , exceptions
   -- , free
@@ -157,4 +157,3 @@ benchmark command
   , vinyl-sum
   , criterion
   , deepseq
-

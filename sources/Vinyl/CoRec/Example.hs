@@ -1,5 +1,5 @@
-module CoRec.Example where
-import CoRec()
+module Vinyl.CoRec.Example where
+import Vinyl.CoRec
 
 {-|
 @
@@ -10,4 +10,3 @@ main :: IO ()
 main = do
  putStrLn ""
  print $ "CoRec"
-

@@ -1,5 +1,5 @@
-module CoRec.Extra
- ( module CoRec.Extra
+module Vinyl.CoRec.Extra
+ ( module Vinyl.CoRec.Extra
  , module X
  ) where
 
@@ -25,4 +25,3 @@ either2maybe = either (const Nothing) Just
 
 either2bool :: Either e a -> Bool
 either2bool = either (const False) (const True)
-
