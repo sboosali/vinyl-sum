@@ -14,7 +14,9 @@
 {-|
 
 -}
-module Vinyl.CoRec where
+module Vinyl.CoRec
+ ( module Vinyl.CoRec
+ ) where
 
 import Data.Vinyl
 import Data.Vinyl.Functor (Identity(..)) -- Compose(..), (:.),
@@ -24,6 +26,26 @@ import Data.Vinyl.Functor (Identity(..)) -- Compose(..), (:.),
 -- import Data.Proxy
 -- import GHC.Prim (Constraint)
 
+{- $setup
+
+(for doctest, see 'match')
+
+>>> :set +m
+>>> :set -XDataKinds
+>>> import Data.Vinyl
+>>> :{
+let truthy :: Rec (Outputs Bool) [Int, String, Bool]
+    truthy =  (O$ \i -> i/=0)
+           :& (O$ \s -> s/="")
+           :& (O$ \b -> b)
+           :& RNil
+:}
+
+the signature is necessary.
+
+(also see 'Output', 'O', 'OneOf', 'column').
+
+-}
 
 -- | Generalize algebraic sum types.
 data CoRec :: (k -> *) -> [k] -> * where
@@ -32,7 +54,7 @@ data CoRec :: (k -> *) -> [k] -> * where
 -- | a value of type @OneOf [x,y,z]@ holds a value of one of the types, either @x@ or @y@ or @z@.
 type OneOf = CoRec Identity
 
-instance Show (CoRec (Dict Show) ts) where
+instance Show (CoRec (Dict Show) ts) where --TODO RecAll
   show (Col (Dict x)) = "Col "++show x
 
 {-| A function type constructor that takes its arguments in the reverse order.
@@ -110,18 +132,9 @@ a generalized, uncurried, newtyped version of:
 
 e.g.
 
->>> :set +m
->>> import Data.Vinyl
-
-truthy is like a final method (i.e. different definitions can be dispatched on a fixed set of different types):
-
->>> :{
-let truthy :: Rec (Outputs Bool) [Int, String, Bool]
-    truthy =  (O$ \i -> i==0)
-           :& (O$ \s -> s=="")
-           :& (O$ \b -> b)
-           :& RNil
-:}
+truthy is like a final method
+(i.e. different definitions can be dispatched on a
+fixed set of different types):
 
 >>> match truthy (column True       :: OneOf [Int,String,Bool])
 True
@@ -130,7 +143,12 @@ True
 >>> match truthy (column (1::Int)   :: OneOf [Int,String,Bool])
 True
 
-the integer literal needs a type signature (numeric literals are overloaded) because Haskell can't prove that @(Num t, t ∈ [Int,String,Bool])@. but it can prove @(Int ∈ [Int,String,Bool])@. with @ExtendedDefaultRules@, the type variables can be defaulted. the same problem (and solutions) exists for string literals with @OverloadedStrings@, and for list literals with @OverloadedLists@.
+the integer literal needs a type signature (numeric literals are overloaded)
+because Haskell can't prove that @(Num t, t ∈ [Int,String,Bool])@.
+but it can prove @(Int ∈ [Int,String,Bool])@. with @ExtendedDefaultRules@,
+the type variables can be defaulted. the same problem (and solutions)
+exists for string literals with @OverloadedStrings@,
+and for list literals with @OverloadedLists@.
 
 type inference does work when the 'column' is immediately consumed@:
 
