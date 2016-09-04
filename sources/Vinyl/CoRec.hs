@@ -86,6 +86,13 @@ column :: (t ∈ ts) => t -> OneOf ts
 column = Col . Identity
 {-# INLINEABLE column #-}
 
+--TODO use rget? 
+-- match' :: Rec f as -> CoRec f as -> b
+-- match' handlers (Col variant) = h variant
+--  where
+--   h = rget variant handlers
+-- {-# INLINEABLE match' #-}
+
 {-| Handler generalizes Outputs.
 
 -}

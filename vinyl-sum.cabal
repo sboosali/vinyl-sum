@@ -70,10 +70,10 @@ library
   -- , template-haskell
 
   , vinyl
-  , deepseq
-  , hashable
-  , semigroups
-  
+  -- , deepseq
+  -- , hashable
+  -- , semigroups
+
   -- , lens
   -- , exceptions
   -- , free
